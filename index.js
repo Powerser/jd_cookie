@@ -129,7 +129,6 @@ async function step1() {
             Host: 'plogin.m.jd.com',
         },
     });
-
     return praseSetCookies(response);
 }
 
@@ -214,6 +213,7 @@ async function checkLogin(user) {
 
 /**
  * 获取登录口令
+ *
  * @param {*} url
  * @return {*} code
  */
@@ -260,7 +260,6 @@ async function getJDCode(url) {
  *
  */
 async function updateCookie(cookie, userMsg, cookieTime) {
-    console.log('UPDATE_API = ', UPDATE_API);
     if (UPDATE_API) {
         try {
             if (UPDATE_API.includes('&')) {
@@ -281,8 +280,6 @@ async function updateCookie(cookie, userMsg, cookieTime) {
                     msg += `服务器${index} ${JSON.parse(res.body).msg}${urls.length === index ? '' : '\n'}`;
                     index++;
                 }
-                console.log('urls = ', urls);
-                console.log('msg = ', msg);
                 return msg;
             } else {
                 if (UPDATE_API.startsWith('http')) {
@@ -323,7 +320,6 @@ async function updateCookie(cookie, userMsg, cookieTime) {
 async function cookieFlow(cookie, userMsg, cookieTime) {
     try {
         const updateMsg = await updateCookie(cookie, userMsg, cookieTime);
-        console.log('updateMsg = ', updateMsg)
         await notify.sendNotify(updateMsg, `=====获取到的Cookie=====\n\n${cookie}\n\n${userMsg ? '备注信息：' + userMsg : ''}`);
     } catch (err) {
         return '';
